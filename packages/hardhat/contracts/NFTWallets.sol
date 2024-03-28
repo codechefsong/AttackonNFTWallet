@@ -1,13 +1,25 @@
 //SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 
+import "@openzeppelin/contracts/utils/Counters.sol";
 import "./ERC6551Registry.sol";
 
 contract NFTWallets {
+  using Counters for Counters.Counter;
+  Counters.Counter public numberOfBattles;
+
   address public immutable owner;
   ERC6551Registry public registry;
 
   mapping(address => address) public tbaList;
+  Battle[] public battleList;
+
+  struct Battle {
+    uint256 id;
+    uint256 totalDamage;
+    uint256 hp;
+    bool isFinish;
+  }
 
   constructor(address _owner, address _registryAddress) {
     owner = _owner;
@@ -17,6 +29,16 @@ contract NFTWallets {
   modifier isOwner() {
     require(msg.sender == owner, "Not the Owner");
     _;
+  }
+
+  function getBattles() public view returns (Battle[] memory){
+    return battleList;
+  }
+
+  function createBattle() external {
+    uint256 newId = numberOfBattles.current();
+    battleList.push(Battle(newId, 0, 100, false));
+    numberOfBattles.increment();
   }
 
   function createTokenBoundAccount(

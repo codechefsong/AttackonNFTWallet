@@ -800,6 +800,47 @@ const deployedContracts = {
         {
           inputs: [
             {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "battleList",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "totalDamage",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "hp",
+              type: "uint256",
+            },
+            {
+              internalType: "bool",
+              name: "isFinish",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "createBattle",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
               internalType: "address",
               name: "_implementation",
               type: "address",
@@ -833,6 +874,54 @@ const deployedContracts = {
           name: "createTokenBoundAccount",
           outputs: [],
           stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getBattles",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "totalDamage",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "hp",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bool",
+                  name: "isFinish",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct NFTWallets.Battle[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "numberOfBattles",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "_value",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
         {
