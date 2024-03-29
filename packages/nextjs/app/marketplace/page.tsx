@@ -15,33 +15,28 @@ const Marketplace: NextPage = () => {
 
   const { data: nfts } = useScaffoldContractRead({
     contractName: "BattleWalletNFT",
-    functionName: "getMyNFTs",
+    functionName: "getNonDeployedBattleWallet",
     args: [address],
   });
 
-  const { writeAsync: mintNFT } = useScaffoldContractWrite({
-    contractName: "BattleWalletNFT",
-    functionName: "mint",
-    args: [address, "URL"],
-    onBlockConfirmation: txnReceipt => {
-      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
-    },
-  });
-
-  const { writeAsync: createAccount } = useScaffoldContractWrite({
-    contractName: "ERC6551Registry",
-    functionName: "createAccount",
-    args: [
-      deployedContracts[CHAIN_ID].ERC6551Account.address,
-      BigInt("1"),
-      deployedContracts[CHAIN_ID].BattleWalletNFT.address,
-      BigInt(selectedNFT),
-      BigInt("1"),
-      "0x",
-    ],
+  const { writeAsync: mintAndCreateTokenBoundAccount } = useScaffoldContractWrite({
+    contractName: "NFTWallets",
+    functionName: "mintAndCreateTokenBoundAccount",
+    args: [deployedContracts[CHAIN_ID].ERC6551Account.address, BigInt("1"), BigInt("1"), "0x", ""],
     onBlockConfirmation: txnReceipt => {
       console.log("📦 Transaction blockHash", txnReceipt.blockHash);
       console.log(txnReceipt);
+    },
+  });
+
+  const { writeAsync: createBattle } = useScaffoldContractWrite({
+    contractName: "NFTWallets",
+    functionName: "createBattle",
+    args: [BigInt(selectedNFT)],
+    onBlockConfirmation: txnReceipt => {
+      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
+      console.log(txnReceipt);
+      setSelectNFT(-1);
     },
   });
 
@@ -57,19 +52,19 @@ const Marketplace: NextPage = () => {
             <div
               key={index}
               className="w-16 h-20 border border-gray-30 flex items-center justify-center font-bold mr-2 mb-2 cursor-pointer"
-              style={{ background: selectedNFT === index ? "#00cc99" : "white" }}
-              onClick={() => setSelectNFT(index)}
+              style={{ background: selectedNFT === Number(n.id) ? "#00cc99" : "white" }}
+              onClick={() => setSelectNFT(Number(n.id))}
             >
-              {n.toString()}
+              {n.id.toString()}
             </div>
           ))}
         </div>
 
         <button
           className="py-2 px-16 mb-10 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
-          onClick={() => createAccount()}
+          onClick={() => createBattle()}
         >
-          Create Token Bound Account
+          Create Battle
         </button>
         <h1 className="text-center mb-5">
           <span className="block text-2xl mb-2">Buy a Wallet NFT</span>
@@ -77,7 +72,7 @@ const Marketplace: NextPage = () => {
 
         <button
           className="py-2 px-16 mb-1 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
-          onClick={() => mintNFT()}
+          onClick={() => mintAndCreateTokenBoundAccount()}
         >
           Buy
         </button>

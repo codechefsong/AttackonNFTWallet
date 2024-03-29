@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     BattleWalletNFT: {
-      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      address: "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
       abi: [
         {
           inputs: [],
@@ -200,6 +200,42 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "address",
+              name: "_owner",
+              type: "address",
+            },
+          ],
+          name: "getNonDeployedBattleWallet",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "url",
+                  type: "string",
+                },
+                {
+                  internalType: "bool",
+                  name: "isDeployed",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct BattleWalletNFT.BattleWallet[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
               name: "owner",
               type: "address",
             },
@@ -229,7 +265,7 @@ const deployedContracts = {
             },
             {
               internalType: "string",
-              name: "_tokenURI_",
+              name: "_tokenURI",
               type: "string",
             },
           ],
@@ -372,6 +408,24 @@ const deployedContracts = {
         {
           inputs: [
             {
+              internalType: "address",
+              name: "_owner",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "_id",
+              type: "uint256",
+            },
+          ],
+          name: "setBattleWalletToDeployed",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
               internalType: "bytes4",
               name: "interfaceId",
               type: "bytes4",
@@ -441,6 +495,40 @@ const deployedContracts = {
           name: "transferFrom",
           outputs: [],
           stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "userBattleWallet",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "url",
+              type: "string",
+            },
+            {
+              internalType: "bool",
+              name: "isDeployed",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
       ],
@@ -779,7 +867,7 @@ const deployedContracts = {
       },
     },
     NFTWallets: {
-      address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      address: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
       abi: [
         {
           inputs: [
@@ -791,6 +879,11 @@ const deployedContracts = {
             {
               internalType: "address",
               name: "_registryAddress",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "_nftAddress",
               type: "address",
             },
           ],
@@ -833,45 +926,26 @@ const deployedContracts = {
         },
         {
           inputs: [],
-          name: "createBattle",
-          outputs: [],
-          stateMutability: "nonpayable",
+          name: "battleWalletNFT",
+          outputs: [
+            {
+              internalType: "contract BattleWalletNFT",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
         {
           inputs: [
             {
-              internalType: "address",
-              name: "_implementation",
-              type: "address",
-            },
-            {
               internalType: "uint256",
-              name: "_chainId",
+              name: "_id",
               type: "uint256",
-            },
-            {
-              internalType: "address",
-              name: "_tokenContract",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "_tokenId",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "_salt",
-              type: "uint256",
-            },
-            {
-              internalType: "bytes",
-              name: "_initData",
-              type: "bytes",
             },
           ],
-          name: "createTokenBoundAccount",
+          name: "createBattle",
           outputs: [],
           stateMutability: "nonpayable",
           type: "function",
@@ -909,6 +983,39 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "_implementation",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "_chainId",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "_salt",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "_initData",
+              type: "bytes",
+            },
+            {
+              internalType: "string",
+              name: "_tokenURI",
+              type: "string",
+            },
+          ],
+          name: "mintAndCreateTokenBoundAccount",
+          outputs: [],
+          stateMutability: "nonpayable",
           type: "function",
         },
         {

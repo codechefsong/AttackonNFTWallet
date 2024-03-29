@@ -3,6 +3,7 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "./ERC6551Registry.sol";
+import "./BattleWalletNFT.sol";
 
 contract NFTWallets {
   using Counters for Counters.Counter;
@@ -10,6 +11,7 @@ contract NFTWallets {
 
   address public immutable owner;
   ERC6551Registry public registry;
+  BattleWalletNFT public battleWalletNFT;
 
   mapping(address => address) public tbaList;
   Battle[] public battleList;
@@ -21,9 +23,10 @@ contract NFTWallets {
     bool isFinish;
   }
 
-  constructor(address _owner, address _registryAddress) {
+  constructor(address _owner, address _registryAddress, address _nftAddress) {
     owner = _owner;
     registry = ERC6551Registry(_registryAddress);
+    battleWalletNFT = BattleWalletNFT(_nftAddress);
   }
 
   modifier isOwner() {
@@ -35,21 +38,22 @@ contract NFTWallets {
     return battleList;
   }
 
-  function createBattle() external {
+  function createBattle(uint256 _id) external {
+    battleWalletNFT.setBattleWalletToDeployed(msg.sender, _id);
     uint256 newId = numberOfBattles.current();
     battleList.push(Battle(newId, 0, 100, false));
     numberOfBattles.increment();
   }
 
-  function createTokenBoundAccount(
+  function mintAndCreateTokenBoundAccount(
     address _implementation,
     uint256 _chainId,
-    address _tokenContract,
-    uint256 _tokenId,
     uint256 _salt,
-    bytes calldata _initData
+    bytes calldata _initData,
+    string calldata _tokenURI
   ) external {
-    address newTBA = registry.createAccount(_implementation, _chainId, _tokenContract, _tokenId, _salt, _initData);
+    uint256 tokenId = battleWalletNFT.mint(msg.sender, _tokenURI);
+    address newTBA = registry.createAccount(_implementation, _chainId, address(battleWalletNFT), tokenId, _salt, _initData);
     tbaList[msg.sender] = newTBA;
   }
 
