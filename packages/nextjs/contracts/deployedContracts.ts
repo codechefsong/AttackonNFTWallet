@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     BattleWalletNFT: {
-      address: "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
+      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
       abi: [
         {
           inputs: [],
@@ -867,7 +867,7 @@ const deployedContracts = {
       },
     },
     NFTWallets: {
-      address: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+      address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
       abi: [
         {
           inputs: [
@@ -948,6 +948,47 @@ const deployedContracts = {
           name: "createBattle",
           outputs: [],
           stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "_battleId",
+              type: "uint256",
+            },
+          ],
+          name: "getBattleByID",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "totalDamage",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "hp",
+                  type: "uint256",
+                },
+                {
+                  internalType: "bool",
+                  name: "isFinish",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct NFTWallets.Battle",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
         {

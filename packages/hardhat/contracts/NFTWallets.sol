@@ -38,6 +38,10 @@ contract NFTWallets {
     return battleList;
   }
 
+  function getBattleByID(uint256 _battleId) public view returns (Battle memory){
+    return battleList[_battleId];
+  }
+
   function createBattle(uint256 _id) external {
     battleWalletNFT.setBattleWalletToDeployed(msg.sender, _id);
     uint256 newId = numberOfBattles.current();
