@@ -30,6 +30,14 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   const BattleWalletNFT = await hre.ethers.getContract<Contract>("BattleWalletNFT", deployer);
 
+  await deploy("AttackPoint", {
+    from: deployer,
+    log: true,
+    autoMine: true,
+  });
+
+  const AttackPoint = await hre.ethers.getContract<Contract>("AttackPoint", deployer);
+
   await deploy("ERC6551Registry", {
     from: deployer,
     log: true,
@@ -46,7 +54,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   await deploy("NFTWallets", {
     from: deployer,
-    args: [deployer, await ERC6551Registry.getAddress(), await BattleWalletNFT.getAddress()],
+    args: [deployer, await ERC6551Registry.getAddress(), await BattleWalletNFT.getAddress(), await AttackPoint.getAddress()],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.

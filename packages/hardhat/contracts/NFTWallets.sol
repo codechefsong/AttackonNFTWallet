@@ -4,6 +4,7 @@ pragma solidity >=0.8.0 <0.9.0;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "./ERC6551Registry.sol";
 import "./BattleWalletNFT.sol";
+import "./AttackPoint.sol";
 
 contract NFTWallets {
   using Counters for Counters.Counter;
@@ -12,6 +13,7 @@ contract NFTWallets {
   address public immutable owner;
   ERC6551Registry public registry;
   BattleWalletNFT public battleWalletNFT;
+  AttackPoint public attackPoint;
 
   mapping(address => address) public tbaList;
   Battle[] public battleList;
@@ -23,10 +25,11 @@ contract NFTWallets {
     bool isFinish;
   }
 
-  constructor(address _owner, address _registryAddress, address _nftAddress) {
+  constructor(address _owner, address _registryAddress, address _nftAddress, address _tokenAddress) {
     owner = _owner;
     registry = ERC6551Registry(_registryAddress);
     battleWalletNFT = BattleWalletNFT(_nftAddress);
+    attackPoint = AttackPoint(_tokenAddress);
   }
 
   modifier isOwner() {
