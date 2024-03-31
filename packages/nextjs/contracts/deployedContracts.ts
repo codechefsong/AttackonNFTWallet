@@ -517,9 +517,26 @@ const deployedContracts = {
           name: "getMyNFTs",
           outputs: [
             {
-              internalType: "uint256[]",
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "url",
+                  type: "string",
+                },
+                {
+                  internalType: "bool",
+                  name: "isDeployed",
+                  type: "bool",
+                },
+              ],
+              internalType: "struct BattleWalletNFT.BattleWallet[]",
               name: "",
-              type: "uint256[]",
+              type: "tuple[]",
             },
           ],
           stateMutability: "view",
@@ -607,30 +624,6 @@ const deployedContracts = {
             },
           ],
           stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          name: "mynfts",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
           type: "function",
         },
         {

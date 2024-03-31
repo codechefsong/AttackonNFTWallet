@@ -15,7 +15,7 @@ const Marketplace: NextPage = () => {
 
   const { data: nfts } = useScaffoldContractRead({
     contractName: "BattleWalletNFT",
-    functionName: "getNonDeployedBattleWallet",
+    functionName: "getMyNFTs",
     args: [address],
   });
 
@@ -42,40 +42,55 @@ const Marketplace: NextPage = () => {
 
   return (
     <div className="flex items-center flex-col flex-grow pt-7">
-      <div className="px-5">
-        <h1 className="text-center mb-5">
-          <span className="block text-3xl mb-2">Select your wallet NFT</span>
-        </h1>
+      <div className="grid lg:grid-cols-2 flex-grow gap-[30px]">
+        <div>
+          <h2 className="mb-5">
+            <span className="block text-3xl mb-2">Select your wallet NFT</span>
+          </h2>
 
-        <div className="flex">
-          {nfts?.map((n, index) => (
-            <div
-              key={index}
-              className="w-16 h-20 border border-gray-30 flex items-center justify-center font-bold mr-2 mb-2 cursor-pointer"
-              style={{ background: selectedNFT === Number(n.id) ? "#00cc99" : "white" }}
-              onClick={() => setSelectNFT(Number(n.id))}
-            >
-              {n.id.toString()}
-            </div>
-          ))}
+          <div className="flex">
+            {nfts?.map((n, index) => (
+              <div
+                key={index}
+                className="w-16 h-20 border border-gray-30 flex items-center justify-center font-bold mr-2 mb-2 cursor-pointer"
+                style={{ background: selectedNFT === Number(n.id) ? "#00cc99" : "white" }}
+                onClick={() => setSelectNFT(Number(n.id))}
+              >
+                {n?.id?.toString()}
+              </div>
+            ))}
+          </div>
+
+          <h2 className="mb-5">
+            <span className="block text-2xl mb-2">Buy a Wallet NFT</span>
+          </h2>
+
+          <button
+            className="py-2 px-16 mb-1 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
+            onClick={() => mintAndCreateTokenBoundAccount()}
+          >
+            Buy
+          </button>
         </div>
-
-        <button
-          className="py-2 px-16 mb-10 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
-          onClick={() => createBattle()}
-        >
-          Create Battle
-        </button>
-        <h1 className="text-center mb-5">
-          <span className="block text-2xl mb-2">Buy a Wallet NFT</span>
-        </h1>
-
-        <button
-          className="py-2 px-16 mb-1 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
-          onClick={() => mintAndCreateTokenBoundAccount()}
-        >
-          Buy
-        </button>
+        <div className="px-5">
+          {selectedNFT !== -1 && (
+            <div>
+              <h2 className="mb-5">
+                <span className="block text-3xl mb-2">Wallet NFT Info</span>
+              </h2>
+              <p>ID: {nfts && Number(nfts[selectedNFT].id)}</p>
+              <p>Is Battled: {nfts && nfts[selectedNFT].isDeployed ? "Yes" : "No"}</p>
+              {nfts && !nfts[selectedNFT].isDeployed && (
+                <button
+                  className="py-2 px-16 mb-10 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
+                  onClick={() => createBattle()}
+                >
+                  Create Battle
+                </button>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
