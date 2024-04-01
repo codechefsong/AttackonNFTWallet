@@ -10,11 +10,12 @@ contract NFTWallets {
   using Counters for Counters.Counter;
   Counters.Counter public numberOfBattles;
 
-  address public immutable owner;
   ERC6551Registry public registry;
   BattleWalletNFT public battleWalletNFT;
   AttackPoint public attackPoint;
 
+  address public immutable owner;
+  uint256 public constant tokensPerEth = 100000;
   mapping(address => address) public tbaList;
   Battle[] public battleList;
 
@@ -31,6 +32,8 @@ contract NFTWallets {
     battleWalletNFT = BattleWalletNFT(_nftAddress);
     attackPoint = AttackPoint(_tokenAddress);
   }
+
+  event BuyTokens(address buyer, uint256 amountOfETH, uint256 amountOfTokens);
 
   modifier isOwner() {
     require(msg.sender == owner, "Not the Owner");
@@ -62,6 +65,12 @@ contract NFTWallets {
     uint256 tokenId = battleWalletNFT.mint(msg.sender, _tokenURI);
     address newTBA = registry.createAccount(_implementation, _chainId, address(battleWalletNFT), tokenId, _salt, _initData);
     tbaList[msg.sender] = newTBA;
+  }
+
+  function buyAttackPoint() public payable {
+    uint256 tokens = tokensPerEth * msg.value;
+    attackPoint.mint(msg.sender, tokens);
+    emit BuyTokens(msg.sender, msg.value, tokens);
   }
 
   function attackWallet(uint256 _id) public {

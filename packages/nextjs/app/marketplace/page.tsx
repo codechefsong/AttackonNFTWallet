@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { BuyAttackPoint } from "./_components/BuyAttackPoints";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import deployedContracts from "~~/contracts/deployedContracts";
@@ -88,6 +89,7 @@ const Marketplace: NextPage = () => {
                   Create Battle
                 </button>
               )}
+              <BuyAttackPoint />
             </div>
           )}
         </div>

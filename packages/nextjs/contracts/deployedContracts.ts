@@ -1189,7 +1189,7 @@ const deployedContracts = {
       },
     },
     NFTWallets: {
-      address: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+      address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
       abi: [
         {
           inputs: [
@@ -1216,6 +1216,31 @@ const deployedContracts = {
           ],
           stateMutability: "nonpayable",
           type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "buyer",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountOfETH",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amountOfTokens",
+              type: "uint256",
+            },
+          ],
+          name: "BuyTokens",
+          type: "event",
         },
         {
           inputs: [],
@@ -1288,6 +1313,13 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "buyAttackPoint",
+          outputs: [],
+          stateMutability: "payable",
           type: "function",
         },
         {
@@ -1465,6 +1497,19 @@ const deployedContracts = {
               internalType: "address",
               name: "",
               type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "tokensPerEth",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
             },
           ],
           stateMutability: "view",
