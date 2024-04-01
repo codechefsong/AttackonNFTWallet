@@ -64,6 +64,17 @@ contract NFTWallets {
     tbaList[msg.sender] = newTBA;
   }
 
+  function attackWallet(uint256 _id) public {
+    if (battleList[_id].hp > 10) {
+      battleList[_id].hp -= 10;
+    }
+    else {
+      battleList[_id].hp = 0;
+      battleList[_id].isFinish = true;
+    }
+    battleList[_id].totalDamage += 10;
+  }
+
   function withdraw() public isOwner {
     (bool success, ) = owner.call{ value: address(this).balance }("");
     require(success, "Failed to send Ether");

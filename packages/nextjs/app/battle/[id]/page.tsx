@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useAccount } from "wagmi";
-import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 const BattleRoom = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -12,6 +12,16 @@ const BattleRoom = ({ params }: { params: { id: string } }) => {
     contractName: "NFTWallets",
     functionName: "getBattleByID",
     args: [params?.id as any],
+  });
+
+  const { writeAsync: attackWallet } = useScaffoldContractWrite({
+    contractName: "NFTWallets",
+    functionName: "attackWallet",
+    args: [BigInt(params?.id)],
+    onBlockConfirmation: txnReceipt => {
+      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
+      console.log(txnReceipt);
+    },
   });
 
   return (
@@ -24,6 +34,12 @@ const BattleRoom = ({ params }: { params: { id: string } }) => {
         <p>Health Point: {matchData?.hp.toString()}</p>
         <p>Total Damage: {matchData?.totalDamage.toString()}</p>
         <p>Is finish: {matchData?.isFinish ? "Yes" : "No"}</p>
+        <button
+          className="py-2 px-16 mb-1 mt-3 bg-red-400 rounded baseline hover:bg-red-300 disabled:opacity-50"
+          onClick={() => attackWallet()}
+        >
+          Attack
+        </button>
         <button
           className="py-2 px-16 mb-1 mt-3 bg-gray-300 rounded baseline hover:bg-gray-200 disabled:opacity-50"
           onClick={() => router.push("/lobby")}
