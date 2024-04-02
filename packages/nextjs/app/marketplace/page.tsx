@@ -37,7 +37,16 @@ const Marketplace: NextPage = () => {
     onBlockConfirmation: txnReceipt => {
       console.log("📦 Transaction blockHash", txnReceipt.blockHash);
       console.log(txnReceipt);
-      setSelectNFT(-1);
+    },
+  });
+
+  const { writeAsync: healWallet } = useScaffoldContractWrite({
+    contractName: "NFTWallets",
+    functionName: "healWallet",
+    args: [BigInt(selectedNFT)],
+    onBlockConfirmation: txnReceipt => {
+      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
+      console.log(txnReceipt);
     },
   });
 
@@ -89,6 +98,12 @@ const Marketplace: NextPage = () => {
                   Create Battle
                 </button>
               )}
+              <button
+                className="py-2 px-16 mb-10 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
+                onClick={() => healWallet()}
+              >
+                Heal Wallet
+              </button>
               <BuyAttackPoint />
             </div>
           )}

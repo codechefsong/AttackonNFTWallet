@@ -84,6 +84,10 @@ contract NFTWallets {
     battleList[_id].totalDamage += 10;
   }
 
+  function healWallet(uint256 _id) public {
+    battleList[_id].hp = 100;
+  }
+
   function withdraw() public isOwner {
     (bool success, ) = owner.call{ value: address(this).balance }("");
     require(success, "Failed to send Ether");
