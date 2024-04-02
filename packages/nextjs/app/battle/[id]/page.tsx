@@ -33,6 +33,7 @@ const BattleRoom = ({ params }: { params: { id: string } }) => {
         <p>{address}</p>
         <p>Health Point: {matchData?.hp.toString()}</p>
         <p>Total Damage: {matchData?.totalDamage.toString()}</p>
+        <p>Prize Pool: {matchData?.prizePool.toString()} WEI</p>
         <p>Is finish: {matchData?.isFinish ? "Yes" : "No"}</p>
         <button
           className="py-2 px-16 mb-1 mt-3 bg-red-400 rounded baseline hover:bg-red-300 disabled:opacity-50"

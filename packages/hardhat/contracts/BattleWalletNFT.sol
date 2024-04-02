@@ -13,6 +13,7 @@ contract BattleWalletNFT is ERC721URIStorage {
   struct BattleWallet {
     uint256 id;
     string url;
+    address tba;
     bool isDeployed;
   }
 
@@ -24,7 +25,7 @@ contract BattleWalletNFT is ERC721URIStorage {
     _setTokenURI(newItemId, _tokenURI);
 
     _tokenIds.increment();
-    userBattleWallet[_to].push(BattleWallet(newItemId, _tokenURI, false));
+    userBattleWallet[_to].push(BattleWallet(newItemId, _tokenURI, address(0), false));
     return newItemId;
   }
 
@@ -55,7 +56,11 @@ contract BattleWalletNFT is ERC721URIStorage {
     return nonDeployBattleWallets;
   }
 
-   function setBattleWalletToDeployed(address _owner, uint256 _id) public {
+  function setBattleWalletToDeployed(address _owner, uint256 _id) public {
     userBattleWallet[_owner][_id].isDeployed = true;
+  }
+
+  function setTBA(address _owner, uint256 _id, address _tba) public {
+    userBattleWallet[_owner][_id].tba = _tba;
   }
 }

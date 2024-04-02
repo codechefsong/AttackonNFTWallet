@@ -23,6 +23,7 @@ contract NFTWallets {
     uint256 id;
     uint256 totalDamage;
     uint256 hp;
+    uint256 prizePool;
     bool isFinish;
   }
 
@@ -51,7 +52,7 @@ contract NFTWallets {
   function createBattle(uint256 _id) external {
     battleWalletNFT.setBattleWalletToDeployed(msg.sender, _id);
     uint256 newId = numberOfBattles.current();
-    battleList.push(Battle(newId, 0, 100, false));
+    battleList.push(Battle(newId, 0, 100, 0, false));
     numberOfBattles.increment();
   }
 
@@ -65,6 +66,13 @@ contract NFTWallets {
     uint256 tokenId = battleWalletNFT.mint(msg.sender, _tokenURI);
     address newTBA = registry.createAccount(_implementation, _chainId, address(battleWalletNFT), tokenId, _salt, _initData);
     tbaList[msg.sender] = newTBA;
+    battleWalletNFT.setTBA(msg.sender, tokenId, newTBA);
+  }
+
+  function depositETH(uint256 _id, address _tba) public payable {
+    battleList[_id].prizePool += msg.value;
+    (bool success, ) = _tba.call{ value: msg.value }("");
+    require(success, "Failed to send Ether");
   }
 
   function buyAttackPoint() public payable {

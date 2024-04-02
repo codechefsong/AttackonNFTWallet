@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     AttackPoint: {
-      address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+      address: "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
       abi: [
         {
           inputs: [],
@@ -336,7 +336,7 @@ const deployedContracts = {
       },
     },
     BattleWalletNFT: {
-      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      address: "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
       abi: [
         {
           inputs: [],
@@ -529,6 +529,11 @@ const deployedContracts = {
                   type: "string",
                 },
                 {
+                  internalType: "address",
+                  name: "tba",
+                  type: "address",
+                },
+                {
                   internalType: "bool",
                   name: "isDeployed",
                   type: "bool",
@@ -563,6 +568,11 @@ const deployedContracts = {
                   internalType: "string",
                   name: "url",
                   type: "string",
+                },
+                {
+                  internalType: "address",
+                  name: "tba",
+                  type: "address",
                 },
                 {
                   internalType: "bool",
@@ -748,6 +758,29 @@ const deployedContracts = {
         {
           inputs: [
             {
+              internalType: "address",
+              name: "_owner",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "_id",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "_tba",
+              type: "address",
+            },
+          ],
+          name: "setTBA",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
               internalType: "bytes4",
               name: "interfaceId",
               type: "bytes4",
@@ -845,6 +878,11 @@ const deployedContracts = {
               type: "string",
             },
             {
+              internalType: "address",
+              name: "tba",
+              type: "address",
+            },
+            {
               internalType: "bool",
               name: "isDeployed",
               type: "bool",
@@ -881,7 +919,7 @@ const deployedContracts = {
       },
     },
     ERC6551Account: {
-      address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      address: "0x9A676e781A523b5d0C0e43731313A708CB607508",
       abi: [
         {
           inputs: [
@@ -1049,7 +1087,7 @@ const deployedContracts = {
       },
     },
     ERC6551Registry: {
-      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      address: "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
       abi: [
         {
           inputs: [],
@@ -1189,7 +1227,7 @@ const deployedContracts = {
       },
     },
     NFTWallets: {
-      address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+      address: "0x0B306BF915C4d645ff596e518fAf3F9669b97016",
       abi: [
         {
           inputs: [
@@ -1294,6 +1332,11 @@ const deployedContracts = {
               type: "uint256",
             },
             {
+              internalType: "uint256",
+              name: "prizePool",
+              type: "uint256",
+            },
+            {
               internalType: "bool",
               name: "isFinish",
               type: "bool",
@@ -1339,6 +1382,24 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "uint256",
+              name: "_id",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "_tba",
+              type: "address",
+            },
+          ],
+          name: "depositETH",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
               name: "_battleId",
               type: "uint256",
             },
@@ -1360,6 +1421,11 @@ const deployedContracts = {
                 {
                   internalType: "uint256",
                   name: "hp",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "prizePool",
                   type: "uint256",
                 },
                 {
@@ -1395,6 +1461,11 @@ const deployedContracts = {
                 {
                   internalType: "uint256",
                   name: "hp",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "prizePool",
                   type: "uint256",
                 },
                 {

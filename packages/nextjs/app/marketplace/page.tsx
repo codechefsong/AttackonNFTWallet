@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { BuyAttackPoint } from "./_components/BuyAttackPoints";
+import { DepositETH } from "./_components/DepositETH";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import deployedContracts from "~~/contracts/deployedContracts";
@@ -89,6 +90,7 @@ const Marketplace: NextPage = () => {
                 <span className="block text-3xl mb-2">Wallet NFT Info</span>
               </h2>
               <p>ID: {nfts && Number(nfts[selectedNFT].id)}</p>
+              <p>TBA: {nfts && nfts[selectedNFT].tba}</p>
               <p>Is Battled: {nfts && nfts[selectedNFT].isDeployed ? "Yes" : "No"}</p>
               {nfts && !nfts[selectedNFT].isDeployed && (
                 <button
@@ -104,6 +106,7 @@ const Marketplace: NextPage = () => {
               >
                 Heal Wallet
               </button>
+              <DepositETH id={nfts && Number(nfts[selectedNFT].id)} tbaAddress={nfts && nfts[selectedNFT]?.tba} />
               <BuyAttackPoint />
             </div>
           )}
