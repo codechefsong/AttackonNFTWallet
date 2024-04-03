@@ -24,7 +24,7 @@ const Marketplace: NextPage = () => {
   const { writeAsync: mintAndCreateTokenBoundAccount } = useScaffoldContractWrite({
     contractName: "NFTWallets",
     functionName: "mintAndCreateTokenBoundAccount",
-    args: [deployedContracts[CHAIN_ID].ERC6551Account.address, BigInt("1"), BigInt("1"), "0x", ""],
+    args: [deployedContracts[CHAIN_ID].ERC6551Account.address, BigInt(CHAIN_ID), BigInt("1"), "0x", ""],
     onBlockConfirmation: txnReceipt => {
       console.log("📦 Transaction blockHash", txnReceipt.blockHash);
       console.log(txnReceipt);
