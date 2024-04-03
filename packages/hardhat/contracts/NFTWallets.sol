@@ -75,9 +75,9 @@ contract NFTWallets {
     require(success, "Failed to send Ether");
   }
 
-  function buyAttackPoint() public payable {
+  function buyAttackPoint(address _tba) public payable {
     uint256 tokens = tokensPerEth * msg.value;
-    attackPoint.mint(msg.sender, tokens);
+    attackPoint.mint(_tba, tokens);
     emit BuyTokens(msg.sender, msg.value, tokens);
   }
 

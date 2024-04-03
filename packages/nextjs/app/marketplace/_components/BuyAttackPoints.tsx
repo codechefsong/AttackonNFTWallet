@@ -2,13 +2,10 @@
 
 import { useState } from "react";
 import { formatEther, parseEther } from "viem";
-import { useAccount } from "wagmi";
 import { IntegerInput } from "~~/components/scaffold-eth";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
-export const BuyAttackPoint = () => {
-  const { address } = useAccount();
-
+export const BuyAttackPoint = ({ tbaAddress }: any) => {
   const [tokensToBuy, setTokensToBuy] = useState<string | bigint>("");
 
   const { data: tokensPerEth } = useScaffoldContractRead({
@@ -19,12 +16,13 @@ export const BuyAttackPoint = () => {
   const { data: pointAmount } = useScaffoldContractRead({
     contractName: "AttackPoint",
     functionName: "balanceOf",
-    args: [address],
+    args: [tbaAddress],
   });
 
   const { writeAsync: buyTokens } = useScaffoldContractWrite({
     contractName: "NFTWallets",
     functionName: "buyAttackPoint",
+    args: [tbaAddress],
     value: parseEther(tokensToBuy.toString()),
   });
 

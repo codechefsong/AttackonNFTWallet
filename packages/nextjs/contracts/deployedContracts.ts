@@ -1359,7 +1359,13 @@ const deployedContracts = {
           type: "function",
         },
         {
-          inputs: [],
+          inputs: [
+            {
+              internalType: "address",
+              name: "_tba",
+              type: "address",
+            },
+          ],
           name: "buyAttackPoint",
           outputs: [],
           stateMutability: "payable",

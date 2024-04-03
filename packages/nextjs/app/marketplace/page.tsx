@@ -107,7 +107,7 @@ const Marketplace: NextPage = () => {
                 Heal Wallet
               </button>
               <DepositETH id={nfts && Number(nfts[selectedNFT].id)} tbaAddress={nfts && nfts[selectedNFT]?.tba} />
-              <BuyAttackPoint />
+              <BuyAttackPoint tbaAddress={nfts && nfts[selectedNFT]?.tba} />
             </div>
           )}
         </div>
