@@ -4,7 +4,7 @@ import { useState } from "react";
 import { BuyAttackPoint } from "./_components/BuyAttackPoints";
 import { DepositETH } from "./_components/DepositETH";
 import type { NextPage } from "next";
-import { useAccount } from "wagmi";
+import { useAccount, useContractWrite } from "wagmi";
 import deployedContracts from "~~/contracts/deployedContracts";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
@@ -34,21 +34,17 @@ const Marketplace: NextPage = () => {
   const { writeAsync: createBattle } = useScaffoldContractWrite({
     contractName: "NFTWallets",
     functionName: "createBattle",
-    args: [BigInt(selectedNFT)],
+    args: [BigInt(selectedNFT), nfts && nfts[selectedNFT]?.tba],
     onBlockConfirmation: txnReceipt => {
       console.log("📦 Transaction blockHash", txnReceipt.blockHash);
       console.log(txnReceipt);
     },
   });
 
-  const { writeAsync: healWallet } = useScaffoldContractWrite({
-    contractName: "NFTWallets",
+  const { writeAsync: heal } = useContractWrite({
+    address: nfts && nfts[selectedNFT]?.tba,
+    abi: deployedContracts[CHAIN_ID].ERC6551Account.abi,
     functionName: "healWallet",
-    args: [BigInt(selectedNFT)],
-    onBlockConfirmation: txnReceipt => {
-      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
-      console.log(txnReceipt);
-    },
   });
 
   return (
@@ -102,9 +98,9 @@ const Marketplace: NextPage = () => {
               )}
               <button
                 className="py-2 px-16 mb-10 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
-                onClick={() => healWallet()}
+                onClick={() => heal()}
               >
-                Heal Wallet
+                Heal
               </button>
               <DepositETH id={nfts && Number(nfts[selectedNFT].id)} tbaAddress={nfts && nfts[selectedNFT]?.tba} />
               <BuyAttackPoint tbaAddress={nfts && nfts[selectedNFT]?.tba} />

@@ -21,9 +21,8 @@ contract NFTWallets {
 
   struct Battle {
     uint256 id;
-    uint256 totalDamage;
-    uint256 hp;
     uint256 prizePool;
+    address tba;
     bool isFinish;
   }
 
@@ -49,10 +48,10 @@ contract NFTWallets {
     return battleList[_battleId];
   }
 
-  function createBattle(uint256 _id) external {
+  function createBattle(uint256 _id, address _tba) external {
     battleWalletNFT.setBattleWalletToDeployed(msg.sender, _id);
     uint256 newId = numberOfBattles.current();
-    battleList.push(Battle(newId, 0, 100, 0, false));
+    battleList.push(Battle(newId, 0, _tba, false));
     numberOfBattles.increment();
   }
 
@@ -79,21 +78,6 @@ contract NFTWallets {
     uint256 tokens = tokensPerEth * msg.value;
     attackPoint.mint(_tba, tokens);
     emit BuyTokens(msg.sender, msg.value, tokens);
-  }
-
-  function attackWallet(uint256 _id) public {
-    if (battleList[_id].hp > 10) {
-      battleList[_id].hp -= 10;
-    }
-    else {
-      battleList[_id].hp = 0;
-      battleList[_id].isFinish = true;
-    }
-    battleList[_id].totalDamage += 10;
-  }
-
-  function healWallet(uint256 _id) public {
-    battleList[_id].hp = 100;
   }
 
   function withdraw() public isOwner {

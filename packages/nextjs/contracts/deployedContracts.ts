@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     AttackPoint: {
-      address: "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
+      address: "0x0B306BF915C4d645ff596e518fAf3F9669b97016",
       abi: [
         {
           inputs: [],
@@ -336,7 +336,7 @@ const deployedContracts = {
       },
     },
     BattleWalletNFT: {
-      address: "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
+      address: "0x9A676e781A523b5d0C0e43731313A708CB607508",
       abi: [
         {
           inputs: [],
@@ -919,8 +919,15 @@ const deployedContracts = {
       },
     },
     ERC6551Account: {
-      address: "0x9A676e781A523b5d0C0e43731313A708CB607508",
+      address: "0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE",
       abi: [
+        {
+          inputs: [],
+          name: "attackWallet",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
         {
           inputs: [
             {
@@ -953,6 +960,52 @@ const deployedContracts = {
             },
           ],
           stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getHP",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getTotalDamage",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "healWallet",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "hp",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
           type: "function",
         },
         {
@@ -1072,6 +1125,19 @@ const deployedContracts = {
           type: "function",
         },
         {
+          inputs: [],
+          name: "totalDamage",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
           stateMutability: "payable",
           type: "receive",
         },
@@ -1087,7 +1153,7 @@ const deployedContracts = {
       },
     },
     ERC6551Registry: {
-      address: "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
+      address: "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
       abi: [
         {
           inputs: [],
@@ -1227,7 +1293,7 @@ const deployedContracts = {
       },
     },
     NFTWallets: {
-      address: "0x0B306BF915C4d645ff596e518fAf3F9669b97016",
+      address: "0x68B1D87F95878fE05B998F19b66F4baba5De1aed",
       abi: [
         {
           inputs: [
@@ -1297,19 +1363,6 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "uint256",
-              name: "_id",
-              type: "uint256",
-            },
-          ],
-          name: "attackWallet",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
               name: "",
               type: "uint256",
             },
@@ -1323,18 +1376,13 @@ const deployedContracts = {
             },
             {
               internalType: "uint256",
-              name: "totalDamage",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "hp",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
               name: "prizePool",
               type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "tba",
+              type: "address",
             },
             {
               internalType: "bool",
@@ -1377,6 +1425,11 @@ const deployedContracts = {
               internalType: "uint256",
               name: "_id",
               type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "_tba",
+              type: "address",
             },
           ],
           name: "createBattle",
@@ -1421,18 +1474,13 @@ const deployedContracts = {
                 },
                 {
                   internalType: "uint256",
-                  name: "totalDamage",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "hp",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
                   name: "prizePool",
                   type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "tba",
+                  type: "address",
                 },
                 {
                   internalType: "bool",
@@ -1461,18 +1509,13 @@ const deployedContracts = {
                 },
                 {
                   internalType: "uint256",
-                  name: "totalDamage",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
-                  name: "hp",
-                  type: "uint256",
-                },
-                {
-                  internalType: "uint256",
                   name: "prizePool",
                   type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "tba",
+                  type: "address",
                 },
                 {
                   internalType: "bool",
@@ -1486,19 +1529,6 @@ const deployedContracts = {
             },
           ],
           stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "_id",
-              type: "uint256",
-            },
-          ],
-          name: "healWallet",
-          outputs: [],
-          stateMutability: "nonpayable",
           type: "function",
         },
         {

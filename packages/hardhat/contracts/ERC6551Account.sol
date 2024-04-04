@@ -16,8 +16,32 @@ contract ERC6551Account is
     IERC6551Executable
 {
     uint256 public state;
+    uint256 public totalDamage = 0;
+    uint256 public hp = 100;
 
     receive() external payable {}
+
+    function getHP() public view returns (uint256){
+        return hp;
+    }
+
+    function getTotalDamage() public view returns (uint256){
+        return totalDamage;
+    }
+
+    function healWallet() public {
+        hp = 100;
+    }
+
+    function attackWallet() public {
+        if (hp > 10) {
+            hp -= 10;
+        }
+        else {
+            hp = 0;
+        }
+        totalDamage += 10;
+    }
 
     function execute(
         address to,

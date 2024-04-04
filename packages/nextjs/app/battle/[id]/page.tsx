@@ -1,8 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useAccount } from "wagmi";
-import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import { useAccount, useContractRead, useContractWrite } from "wagmi";
+import deployedContracts from "~~/contracts/deployedContracts";
+import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+
+const CHAIN_ID = 31337;
 
 const BattleRoom = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -14,14 +17,24 @@ const BattleRoom = ({ params }: { params: { id: string } }) => {
     args: [params?.id as any],
   });
 
-  const { writeAsync: attackWallet } = useScaffoldContractWrite({
-    contractName: "NFTWallets",
+  const { data: hp } = useContractRead({
+    address: matchData?.tba,
+    abi: deployedContracts[CHAIN_ID].ERC6551Account.abi,
+    functionName: "getHP",
+    watch: true,
+  });
+
+  const { data: totalDamage } = useContractRead({
+    address: matchData?.tba,
+    abi: deployedContracts[CHAIN_ID].ERC6551Account.abi,
+    functionName: "getTotalDamage",
+    watch: true,
+  });
+
+  const { writeAsync: attackWallet } = useContractWrite({
+    address: matchData?.tba,
+    abi: deployedContracts[CHAIN_ID].ERC6551Account.abi,
     functionName: "attackWallet",
-    args: [BigInt(params?.id)],
-    onBlockConfirmation: txnReceipt => {
-      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
-      console.log(txnReceipt);
-    },
   });
 
   return (
@@ -31,8 +44,9 @@ const BattleRoom = ({ params }: { params: { id: string } }) => {
           <span className="block text-2xl mb-2">Battle #{params?.id}</span>
         </h1>
         <p>{address}</p>
-        <p>Health Point: {matchData?.hp.toString()}</p>
-        <p>Total Damage: {matchData?.totalDamage.toString()}</p>
+        <p>Address {matchData?.tba}</p>
+        <p>Health Point: {hp?.toString()}</p>
+        <p>Total Damage: {totalDamage?.toString()}</p>
         <p>Prize Pool: {matchData?.prizePool.toString()} WEI</p>
         <p>Is finish: {matchData?.isFinish ? "Yes" : "No"}</p>
         <button

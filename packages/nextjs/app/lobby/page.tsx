@@ -19,8 +19,8 @@ const Lobby: NextPage = () => {
             <thead>
               <tr className="rounded-xl text-sm text-base-content">
                 <th className="bg-primary">Player ID</th>
-                <th className="bg-primary">Total Damage</th>
-                <th className="bg-primary">Health Point</th>
+                <th className="bg-primary">Prize Pool</th>
+                <th className="bg-primary">Address</th>
                 <th className="bg-primary">Is Finish?</th>
                 <th className="bg-primary">Action</th>
               </tr>
