@@ -35,6 +35,7 @@ const BattleRoom = ({ params }: { params: { id: string } }) => {
     address: matchData?.tba,
     abi: deployedContracts[CHAIN_ID].ERC6551Account.abi,
     functionName: "attackWallet",
+    args: [deployedContracts[CHAIN_ID].AttackPoint.address],
   });
 
   return (

@@ -8,6 +8,7 @@ import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
 import "./interfaces/IERC6551Account.sol";
 import "./interfaces/IERC6551Executable.sol";
+import "./AttackPoint.sol";
 
 contract ERC6551Account is
     IERC165,
@@ -32,8 +33,10 @@ contract ERC6551Account is
     function healWallet() public {
         hp = 100;
     }
-
-    function attackWallet() public {
+    
+    function attackWallet(address tokenAddress) public {
+        AttackPoint atk = AttackPoint(tokenAddress);
+        atk.payTokenAndSent(address(this), 10000000000000000000);
         if (hp > 10) {
             hp -= 10;
         }
