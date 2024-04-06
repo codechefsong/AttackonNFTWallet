@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     AttackPoint: {
-      address: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+      address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
       abi: [
         {
           inputs: [],
@@ -245,6 +245,11 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "address",
               name: "to",
               type: "address",
             },
@@ -354,7 +359,7 @@ const deployedContracts = {
       },
     },
     BattleWalletNFT: {
-      address: "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
+      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
       abi: [
         {
           inputs: [],
@@ -937,7 +942,7 @@ const deployedContracts = {
       },
     },
     ERC6551Account: {
-      address: "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
+      address: "0x0165878A594ca255338adfa4d48449f69242Eb8F",
       abi: [
         {
           inputs: [
@@ -1177,7 +1182,7 @@ const deployedContracts = {
       },
     },
     ERC6551Registry: {
-      address: "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
+      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
       abi: [
         {
           inputs: [],
@@ -1317,7 +1322,7 @@ const deployedContracts = {
       },
     },
     NFTWallets: {
-      address: "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
+      address: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
       abi: [
         {
           inputs: [

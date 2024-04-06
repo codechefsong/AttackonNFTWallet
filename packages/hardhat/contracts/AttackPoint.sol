@@ -14,8 +14,8 @@ contract AttackPoint is ERC20 {
         _burn(account, amount);
     }
 
-    function payTokenAndSent(address to, uint256 amount) public {
-        _burn(msg.sender, amount);
+    function payTokenAndSent(address from, address to, uint256 amount) public {
+        _burn(from, amount);
         _mint(to, amount / 5);
     }
 }

@@ -36,7 +36,7 @@ contract ERC6551Account is
     
     function attackWallet(address tokenAddress) public {
         AttackPoint atk = AttackPoint(tokenAddress);
-        atk.payTokenAndSent(address(this), 10000000000000000000);
+        atk.payTokenAndSent(msg.sender, address(this), 10000000000000000000);
         if (hp > 10) {
             hp -= 10;
         }
