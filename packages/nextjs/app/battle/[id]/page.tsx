@@ -31,6 +31,14 @@ const BattleRoom = ({ params }: { params: { id: string } }) => {
     watch: true,
   });
 
+  const { data: playerScore } = useContractRead({
+    address: matchData?.tba,
+    abi: deployedContracts[CHAIN_ID].ERC6551Account.abi,
+    functionName: "getPlayerScore",
+    args: [address || ""],
+    watch: true,
+  });
+
   const { writeAsync: attackWallet } = useContractWrite({
     address: matchData?.tba,
     abi: deployedContracts[CHAIN_ID].ERC6551Account.abi,
@@ -48,6 +56,7 @@ const BattleRoom = ({ params }: { params: { id: string } }) => {
         <p>Address {matchData?.tba}</p>
         <p>Health Point: {hp?.toString()}</p>
         <p>Total Damage: {totalDamage?.toString()}</p>
+        <p>Your Score: {playerScore?.toString()}</p>
         <p>Prize Pool: {matchData?.prizePool?.toString()} WEI</p>
         <p>Is finish: {matchData?.isFinish ? "Yes" : "No"}</p>
         <button

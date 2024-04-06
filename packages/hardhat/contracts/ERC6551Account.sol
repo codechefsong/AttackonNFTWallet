@@ -19,6 +19,7 @@ contract ERC6551Account is
     uint256 public state;
     uint256 public totalDamage = 0;
     uint256 public hp = 100;
+    mapping(address => uint256) public playerScores;
 
     receive() external payable {}
 
@@ -28,6 +29,10 @@ contract ERC6551Account is
 
     function getTotalDamage() public view returns (uint256){
         return totalDamage;
+    }
+
+    function getPlayerScore(address _player) public view returns (uint256){
+        return playerScores[_player];
     }
 
     function healWallet() public {
@@ -44,6 +49,7 @@ contract ERC6551Account is
             hp = 0;
         }
         totalDamage += 10;
+        playerScores[msg.sender] += 10;
     }
 
     function execute(
