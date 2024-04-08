@@ -1,15 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { encodeFunctionData, formatEther, parseEther } from "viem";
-import { useContractWrite } from "wagmi";
+import { formatEther, parseEther } from "viem";
+import { useAccount } from "wagmi";
 import { IntegerInput } from "~~/components/scaffold-eth";
-import deployedContracts from "~~/contracts/deployedContracts";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
-const CHAIN_ID = 31337;
-
-export const BuyAttackPoint = ({ tbaAddress }: any) => {
+export const BuyAttackPoint = () => {
+  const { address } = useAccount();
   const [tokensToBuy, setTokensToBuy] = useState<string | bigint>("");
 
   const { data: tokensPerEth } = useScaffoldContractRead({
@@ -20,33 +18,14 @@ export const BuyAttackPoint = ({ tbaAddress }: any) => {
   const { data: pointAmount } = useScaffoldContractRead({
     contractName: "AttackPoint",
     functionName: "balanceOf",
-    args: [tbaAddress],
-  });
-
-  const { data: approveAmount } = useScaffoldContractRead({
-    contractName: "AttackPoint",
-    functionName: "allowance",
-    args: [tbaAddress, deployedContracts[CHAIN_ID].NFTWallets.address],
+    args: [address],
   });
 
   const { writeAsync: buyTokens } = useScaffoldContractWrite({
     contractName: "NFTWallets",
     functionName: "buyAttackPoint",
-    args: [tbaAddress],
+    args: [address],
     value: parseEther(tokensToBuy.toString()),
-  });
-
-  const dataApprove = encodeFunctionData({
-    abi: deployedContracts[CHAIN_ID].AttackPoint.abi,
-    functionName: "approve",
-    args: [deployedContracts[CHAIN_ID].NFTWallets.address, parseEther(tokensToBuy.toString())],
-  });
-
-  const { writeAsync: approve } = useContractWrite({
-    address: tbaAddress,
-    abi: deployedContracts[CHAIN_ID].ERC6551Account.abi,
-    functionName: "execute",
-    args: [deployedContracts[CHAIN_ID].NFTWallets.address, BigInt("0"), dataApprove, BigInt("0")],
   });
 
   return (
@@ -55,13 +34,6 @@ export const BuyAttackPoint = ({ tbaAddress }: any) => {
         Your Attack Points balance:{" "}
         <div className="inline-flex items-center justify-center">
           {parseFloat(formatEther(pointAmount || 0n)).toFixed(4)}
-          <span className="font-bold ml-1">ATK</span>
-        </div>
-      </div>
-      <div className="text-xl">
-        Allowance amount:{" "}
-        <div className="inline-flex items-center justify-center">
-          {parseFloat(formatEther(approveAmount || 0n)).toFixed(4)}
           <span className="font-bold ml-1">ATK</span>
         </div>
       </div>
@@ -80,9 +52,6 @@ export const BuyAttackPoint = ({ tbaAddress }: any) => {
 
         <button className="btn btn-secondary mt-2" onClick={() => buyTokens()}>
           Buy Attack Points
-        </button>
-        <button className="btn btn-secondary mt-2" onClick={() => approve()}>
-          Approve
         </button>
       </div>
     </div>

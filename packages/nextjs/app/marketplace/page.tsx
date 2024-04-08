@@ -4,6 +4,7 @@ import { useState } from "react";
 import { BuyAttackPoint } from "./_components/BuyAttackPoints";
 import { DepositETH } from "./_components/DepositETH";
 import type { NextPage } from "next";
+import { formatEther } from "viem";
 import { useAccount, useContractWrite } from "wagmi";
 import deployedContracts from "~~/contracts/deployedContracts";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
@@ -19,6 +20,12 @@ const Marketplace: NextPage = () => {
     contractName: "BattleWalletNFT",
     functionName: "getMyNFTs",
     args: [address],
+  });
+
+  const { data: pointAmount } = useScaffoldContractRead({
+    contractName: "AttackPoint",
+    functionName: "balanceOf",
+    args: [nfts && nfts[selectedNFT]?.tba],
   });
 
   const { writeAsync: mintAndCreateTokenBoundAccount } = useScaffoldContractWrite({
@@ -78,6 +85,7 @@ const Marketplace: NextPage = () => {
           >
             Buy
           </button>
+          <BuyAttackPoint />
         </div>
         <div className="px-5">
           {selectedNFT !== -1 && (
@@ -88,6 +96,13 @@ const Marketplace: NextPage = () => {
               <p>ID: {nfts && Number(nfts[selectedNFT].id)}</p>
               <p>TBA: {nfts && nfts[selectedNFT].tba}</p>
               <p>Is Battled: {nfts && nfts[selectedNFT].isDeployed ? "Yes" : "No"}</p>
+              <div className="text-xl">
+                Attack Points balance:{" "}
+                <div className="inline-flex items-center justify-center">
+                  {parseFloat(formatEther(pointAmount || 0n)).toFixed(4)}
+                  <span className="font-bold ml-1">ATK</span>
+                </div>
+              </div>
               {nfts && !nfts[selectedNFT].isDeployed && (
                 <button
                   className="py-2 px-16 mb-10 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
@@ -103,7 +118,6 @@ const Marketplace: NextPage = () => {
                 Heal
               </button>
               <DepositETH id={nfts && Number(nfts[selectedNFT].id)} tbaAddress={nfts && nfts[selectedNFT]?.tba} />
-              <BuyAttackPoint tbaAddress={nfts && nfts[selectedNFT]?.tba} />
             </div>
           )}
         </div>
