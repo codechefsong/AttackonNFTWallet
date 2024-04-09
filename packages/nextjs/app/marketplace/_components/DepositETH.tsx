@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Address, parseEther } from "viem";
-import { Balance } from "~~/components/scaffold-eth";
+import { parseEther } from "viem";
 import { IntegerInput } from "~~/components/scaffold-eth";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
@@ -18,7 +17,6 @@ export const DepositETH = ({ id, tbaAddress }: any) => {
 
   return (
     <div className="flex flex-col items-center">
-      <p className="flex items-center">Balance: {tbaAddress && <Balance address={tbaAddress as Address} />}</p>
       <div className="flex flex-col items-center space-y-4 bg-base-100 shadow-lg shadow-secondary border-8 border-secondary rounded-xl p-6 mt-8 w-full max-w-lg">
         <div className="text-xl">Deposit ETH</div>
 

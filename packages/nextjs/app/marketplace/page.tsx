@@ -4,8 +4,9 @@ import { useState } from "react";
 import { BuyAttackPoint } from "./_components/BuyAttackPoints";
 import { DepositETH } from "./_components/DepositETH";
 import type { NextPage } from "next";
-import { formatEther } from "viem";
+import { Address, formatEther } from "viem";
 import { useAccount, useContractWrite } from "wagmi";
+import { Balance } from "~~/components/scaffold-eth";
 import deployedContracts from "~~/contracts/deployedContracts";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
@@ -103,6 +104,9 @@ const Marketplace: NextPage = () => {
                   <span className="font-bold ml-1">ATK</span>
                 </div>
               </div>
+              <p className="flex items-center">
+                Balance: {nfts && nfts[selectedNFT]?.tba && <Balance address={nfts[selectedNFT]?.tba as Address} />}
+              </p>
               {nfts && !nfts[selectedNFT].isDeployed && (
                 <button
                   className="py-2 px-16 mb-10 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"

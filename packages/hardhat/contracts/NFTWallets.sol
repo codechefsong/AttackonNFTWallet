@@ -3,6 +3,7 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "./ERC6551Registry.sol";
+import "./ERC6551Account.sol";
 import "./BattleWalletNFT.sol";
 import "./AttackPoint.sol";
 
@@ -72,6 +73,9 @@ contract NFTWallets {
     battleList[_id].prizePool += msg.value;
     (bool success, ) = _tba.call{ value: msg.value }("");
     require(success, "Failed to send Ether");
+
+    ERC6551Account account = ERC6551Account(payable(_tba));
+    account.setHP();
   }
 
   function buyAttackPoint(address _tba) public payable {

@@ -38,6 +38,11 @@ contract ERC6551Account is
     function healWallet() public {
         hp = 100;
     }
+
+    function setHP() public {
+        require(hp == 0, "Invalid");
+        hp = 100;
+    }
     
     function attackWallet(address tokenAddress) public {
         AttackPoint atk = AttackPoint(tokenAddress);
