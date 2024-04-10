@@ -35,7 +35,9 @@ contract ERC6551Account is
         return playerScores[_player];
     }
 
-    function healWallet() public {
+    function healWallet(address tokenAddress) public {
+        AttackPoint atk = AttackPoint(tokenAddress);
+        atk.burn(address(this), 2000000000000000000);
         hp = 100;
     }
 

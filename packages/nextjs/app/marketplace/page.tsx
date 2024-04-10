@@ -53,6 +53,7 @@ const Marketplace: NextPage = () => {
     address: nfts && nfts[selectedNFT]?.tba,
     abi: deployedContracts[CHAIN_ID].ERC6551Account.abi,
     functionName: "healWallet",
+    args: [deployedContracts[CHAIN_ID].AttackPoint.address],
   });
 
   return (
