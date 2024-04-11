@@ -59,6 +59,15 @@ contract ERC6551Account is
         playerScores[msg.sender] += 10;
     }
 
+    function claimPrize() public {
+        require(hp == 0, "Game is not over");
+        uint256 percent = playerScores[msg.sender] * 100 / totalDamage;
+        uint256 amount = address(this).balance * percent / 100;
+        (bool success, ) = msg.sender.call{ value: amount }("");
+        require(success, "Failed to send Ether");
+        playerScores[msg.sender] = 0;
+    }
+
     function execute(
         address to,
         uint256 value,

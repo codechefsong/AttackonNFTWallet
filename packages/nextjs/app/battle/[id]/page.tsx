@@ -46,6 +46,12 @@ const BattleRoom = ({ params }: { params: { id: string } }) => {
     args: [deployedContracts[CHAIN_ID].AttackPoint.address],
   });
 
+  const { writeAsync: claimPrize } = useContractWrite({
+    address: matchData?.tba,
+    abi: deployedContracts[CHAIN_ID].ERC6551Account.abi,
+    functionName: "claimPrize",
+  });
+
   return (
     <div className="flex items-center flex-col flex-grow pt-7">
       <div className="px-5">
@@ -64,6 +70,12 @@ const BattleRoom = ({ params }: { params: { id: string } }) => {
           onClick={() => attackWallet()}
         >
           Attack
+        </button>
+        <button
+          className="py-2 px-16 mb-1 mt-3 bg-green-400 rounded baseline hover:bg-green-300 disabled:opacity-50"
+          onClick={() => claimPrize()}
+        >
+          Claim Prize
         </button>
         <button
           className="py-2 px-16 mb-1 mt-3 bg-gray-300 rounded baseline hover:bg-gray-200 disabled:opacity-50"
