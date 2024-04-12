@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useAccount, useContractRead, useContractWrite } from "wagmi";
 import deployedContracts from "~~/contracts/deployedContracts";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+import { getParsedError, notification } from "~~/utils/scaffold-eth";
 
 const CHAIN_ID = 31337;
 
@@ -52,6 +53,26 @@ const BattleRoom = ({ params }: { params: { id: string } }) => {
     functionName: "claimPrize",
   });
 
+  const attack = async () => {
+    try {
+      await attackWallet();
+      notification.success("You paid 10 ATK to attack this wallet");
+    } catch (error) {
+      const message = getParsedError(error);
+      notification.error(message);
+    }
+  };
+
+  const claim = async () => {
+    try {
+      await claimPrize();
+      notification.success("You claim prize");
+    } catch (error) {
+      const message = getParsedError(error);
+      notification.error(message);
+    }
+  };
+
   return (
     <div className="flex items-center flex-col flex-grow pt-7">
       <div className="px-5">
@@ -67,13 +88,13 @@ const BattleRoom = ({ params }: { params: { id: string } }) => {
         <p>Is finish: {matchData?.isFinish ? "Yes" : "No"}</p>
         <button
           className="py-2 px-16 mb-1 mt-3 bg-red-400 rounded baseline hover:bg-red-300 disabled:opacity-50"
-          onClick={() => attackWallet()}
+          onClick={() => attack()}
         >
           Attack
         </button>
         <button
           className="py-2 px-16 mb-1 mt-3 bg-green-400 rounded baseline hover:bg-green-300 disabled:opacity-50"
-          onClick={() => claimPrize()}
+          onClick={() => claim()}
         >
           Claim Prize
         </button>

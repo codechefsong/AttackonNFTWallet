@@ -9,6 +9,7 @@ import { useAccount, useContractWrite } from "wagmi";
 import { Balance } from "~~/components/scaffold-eth";
 import deployedContracts from "~~/contracts/deployedContracts";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import { getParsedError, notification } from "~~/utils/scaffold-eth";
 
 const CHAIN_ID = 31337;
 
@@ -49,12 +50,22 @@ const Marketplace: NextPage = () => {
     },
   });
 
-  const { writeAsync: heal } = useContractWrite({
+  const { writeAsync: healWallet } = useContractWrite({
     address: nfts && nfts[selectedNFT]?.tba,
     abi: deployedContracts[CHAIN_ID].ERC6551Account.abi,
     functionName: "healWallet",
     args: [deployedContracts[CHAIN_ID].AttackPoint.address],
   });
+
+  const heal = async () => {
+    try {
+      await healWallet();
+      notification.success("You used 2 ATK to heal this wallet");
+    } catch (error) {
+      const message = getParsedError(error);
+      notification.error(message);
+    }
+  };
 
   return (
     <div className="flex items-center flex-col flex-grow pt-7">
