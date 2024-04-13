@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { formatEther } from "viem";
 import { useAccount, useContractRead, useContractWrite } from "wagmi";
+import { Address } from "~~/components/scaffold-eth";
 import deployedContracts from "~~/contracts/deployedContracts";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { getParsedError, notification } from "~~/utils/scaffold-eth";
@@ -80,12 +82,13 @@ const BattleRoom = ({ params }: { params: { id: string } }) => {
         <h1 className="text-center mb-5">
           <span className="block text-2xl mb-2">Battle #{params?.id}</span>
         </h1>
-        <p>{address}</p>
-        <p>Address {matchData?.tba}</p>
+        <p>
+          Address: <Address address={matchData?.tba} />
+        </p>
         <p>Health Point: {hp?.toString()}</p>
         <p>Total Damage: {totalDamage?.toString()}</p>
         <p>Your Score: {playerScore?.toString()}</p>
-        <p>Prize Pool: {matchData?.prizePool?.toString()} WEI</p>
+        <p>Prize Pool: {parseFloat(formatEther(matchData?.prizePool || 0n)).toFixed(4)} ETH</p>
         <p>Is finish: {matchData?.isFinish ? "Yes" : "No"}</p>
         <center>
           <Image src="/battlewallet.png" width={100} height={100} alt="Battle Wallet" />
@@ -96,12 +99,14 @@ const BattleRoom = ({ params }: { params: { id: string } }) => {
         >
           Attack
         </button>
-        <button
-          className="py-2 px-16 mb-1 mt-3 bg-green-400 rounded baseline hover:bg-green-300 disabled:opacity-50"
-          onClick={() => claim()}
-        >
-          Claim Prize
-        </button>
+        {hp?.toString() === "0" && (
+          <button
+            className="py-2 px-16 mb-1 mt-3 bg-green-400 rounded baseline hover:bg-green-300 disabled:opacity-50"
+            onClick={() => claim()}
+          >
+            Claim Prize
+          </button>
+        )}
         <button
           className="py-2 px-16 mb-1 mt-3 bg-gray-300 rounded baseline hover:bg-gray-200 disabled:opacity-50"
           onClick={() => router.push("/lobby")}
