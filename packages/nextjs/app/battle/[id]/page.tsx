@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAccount, useContractRead, useContractWrite } from "wagmi";
 import deployedContracts from "~~/contracts/deployedContracts";
@@ -86,6 +87,9 @@ const BattleRoom = ({ params }: { params: { id: string } }) => {
         <p>Your Score: {playerScore?.toString()}</p>
         <p>Prize Pool: {matchData?.prizePool?.toString()} WEI</p>
         <p>Is finish: {matchData?.isFinish ? "Yes" : "No"}</p>
+        <center>
+          <Image src="/battlewallet.png" width={100} height={100} alt="Battle Wallet" />
+        </center>
         <button
           className="py-2 px-16 mb-1 mt-3 bg-red-400 rounded baseline hover:bg-red-300 disabled:opacity-50"
           onClick={() => attack()}

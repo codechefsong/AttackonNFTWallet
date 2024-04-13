@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { BuyAttackPoint } from "./_components/BuyAttackPoints";
 import { DepositETH } from "./_components/DepositETH";
 import type { NextPage } from "next";
@@ -79,10 +80,11 @@ const Marketplace: NextPage = () => {
             {nfts?.map((n, index) => (
               <div
                 key={index}
-                className="w-16 h-20 border border-gray-30 flex items-center justify-center font-bold mr-2 mb-2 cursor-pointer"
+                className="w-16 h-20 border border-gray-30 flex flex-col items-center justify-center font-bold mr-2 mb-2 cursor-pointer"
                 style={{ background: selectedNFT === Number(n.id) ? "#00cc99" : "white" }}
                 onClick={() => setSelectNFT(Number(n.id))}
               >
+                <Image src="/battlewallet.png" width={50} height={50} alt="Battle Wallet" />
                 {n?.id?.toString()}
               </div>
             ))}
@@ -91,6 +93,7 @@ const Marketplace: NextPage = () => {
           <h2 className="mb-5">
             <span className="block text-2xl mb-2">Buy a Wallet NFT</span>
           </h2>
+          <Image src="/battlewallet.png" width={50} height={50} alt="Battle Wallet" />
 
           <button
             className="py-2 px-16 mb-1 mt-3 bg-green-500 rounded baseline hover:bg-green-300 disabled:opacity-50"
