@@ -9,7 +9,7 @@ import deployedContracts from "~~/contracts/deployedContracts";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { getParsedError, notification } from "~~/utils/scaffold-eth";
 
-const CHAIN_ID = 31337;
+const CHAIN_ID = 59141;
 
 const BattleRoom = ({ params }: { params: { id: string } }) => {
   const router = useRouter();

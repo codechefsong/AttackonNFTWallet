@@ -1,3 +1,4 @@
+import { defineChain } from "viem";
 import * as chains from "viem/chains";
 
 export type ScaffoldConfig = {
@@ -9,9 +10,33 @@ export type ScaffoldConfig = {
   walletAutoConnect: boolean;
 };
 
+const linea_sepolia = defineChain({
+  id: 59141,
+  name: "Linea Sepolia",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Ether",
+    symbol: "ETH",
+  },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.sepolia.linea.build"],
+      webSocket: ["wss://rpc.sepolia.linea.build"],
+    },
+    public: {
+      http: ["https://rpc.sepolia.linea.build"],
+      webSocket: ["wss://rpc.sepolia.linea.build"],
+    },
+  },
+  blockExplorers: {
+    default: { name: "Explorer", url: "https://sepolia.lineascan.build/" },
+  },
+  network: "Linea Sepolia",
+});
+
 const scaffoldConfig = {
   // The networks on which your DApp is live
-  targetNetworks: [chains.hardhat],
+  targetNetworks: [linea_sepolia],
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect if you only target the local network (default is 4000)

@@ -12,7 +12,7 @@ import deployedContracts from "~~/contracts/deployedContracts";
 import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { getParsedError, notification } from "~~/utils/scaffold-eth";
 
-const CHAIN_ID = 31337;
+const CHAIN_ID = 59141;
 
 const Marketplace: NextPage = () => {
   const { address } = useAccount();
