@@ -30,7 +30,7 @@ const config: HardhatUserConfig = {
       },
     },
   },
-  defaultNetwork: "localhost",
+  defaultNetwork: "linea_sepolia",
   namedAccounts: {
     deployer: {
       // By default, it will take the first Hardhat account as the deployer
@@ -118,10 +118,27 @@ const config: HardhatUserConfig = {
       url: "https://sepolia.publicgoods.network",
       accounts: [deployerPrivateKey],
     },
+    linea_sepolia: {
+      url: `https://rpc.sepolia.linea.build`,
+      accounts: [deployerPrivateKey],
+    },
   },
   // configuration for harhdat-verify plugin
   etherscan: {
-    apiKey: `${etherscanApiKey}`,
+    apiKey: {
+      mainnet: `${etherscanApiKey}`,
+      linea_sepolia: process.env.LINEASCAN_API_KEY,
+    },
+    customChains: [
+      {
+        network: "linea_sepolia",
+        chainId: 59141,
+        urls: {
+          apiURL: "https://api-sepolia.lineascan.build/api",
+          browserURL: "https://sepolia.lineascan.build/address"
+        }
+      }
+    ]
   },
   // configuration for etherscan-verify from hardhat-deploy plugin
   verify: {
