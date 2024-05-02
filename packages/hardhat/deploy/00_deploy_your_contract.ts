@@ -52,6 +52,14 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   const ERC6551Registry = await hre.ethers.getContract<Contract>("ERC6551Registry", deployer);
 
+  await deploy("Items", {
+    from: deployer,
+    log: true,
+    autoMine: true,
+  });
+
+  const Items = await hre.ethers.getContract<Contract>("Items", deployer);
+
   await deploy("NFTWallets", {
     from: deployer,
     args: [
@@ -59,6 +67,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
       await ERC6551Registry.getAddress(),
       await BattleWalletNFT.getAddress(),
       await AttackPoint.getAddress(),
+      await Items.getAddress(),
     ],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
@@ -67,8 +76,10 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   });
 
   // Get the deployed contract to interact with it after deploying.
-  // const yourContract = await hre.ethers.getContract<Contract>("NFTWallets", deployer);
-  // console.log("👋 Initial greeting:", await yourContract.greeting());
+  // const ERC6551Account = await hre.ethers.getContract<Contract>("ERC6551Account", deployer);
+  // const NFTWalletsContract = await hre.ethers.getContract<Contract>("NFTWallets", deployer);
+  // console.log("Created NFT Wallet", await NFTWalletsContract.mintAndCreateTokenBoundAccount(await ERC6551Account.getAddress(), BigInt("1"), BigInt("0"), "0x", ""));
+  // console.log("Set NFT Wallet to battle", await NFTWalletsContract.createBattle(BigInt("0")));
 };
 
 export default deployYourContract;

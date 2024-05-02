@@ -6,6 +6,7 @@ import "./ERC6551Registry.sol";
 import "./ERC6551Account.sol";
 import "./BattleWalletNFT.sol";
 import "./AttackPoint.sol";
+import "./Items.sol";
 
 contract NFTWallets {
   using Counters for Counters.Counter;
@@ -14,6 +15,7 @@ contract NFTWallets {
   ERC6551Registry public registry;
   BattleWalletNFT public battleWalletNFT;
   AttackPoint public attackPoint;
+  Items public items;
 
   address public immutable owner;
   uint256 public constant tokensPerEth = 100000;
@@ -27,11 +29,12 @@ contract NFTWallets {
     bool isFinish;
   }
 
-  constructor(address _owner, address _registryAddress, address _nftAddress, address _tokenAddress) {
+  constructor(address _owner, address _registryAddress, address _nftAddress, address _tokenAddress, address _itemAddress) {
     owner = _owner;
     registry = ERC6551Registry(_registryAddress);
     battleWalletNFT = BattleWalletNFT(_nftAddress);
     attackPoint = AttackPoint(_tokenAddress);
+    items = Items(_itemAddress);
   }
 
   event BuyTokens(address buyer, uint256 amountOfETH, uint256 amountOfTokens);
